@@ -3,7 +3,7 @@ $page_title = "Profile";
 
 include("_parts/_header.php");
 
-include("_parts/_menu.php");
+include("_parts/_user-menu.php");
 ?>
 
 <div class="container-fluid bg-secondary">

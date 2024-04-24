@@ -1,4 +1,12 @@
 <?php
+
+
+
+
+
+
+
+// ==== Show HTML ====
 $page_title = "Dashboard";
 
 include("_parts/_header.php");

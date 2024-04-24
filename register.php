@@ -1,4 +1,17 @@
 <?php
+include "functions/user-function.php";
+// require "function/user-function.php";
+
+
+if (isset($_POST['btn_register'])) {
+    register();
+}
+
+
+
+
+
+
 // require "connection.php";
 
 // function createUser($first_name, $last_name, $username, $password) {
@@ -66,7 +79,7 @@ include("_parts/_header.php");
                 <!-- <label for="confirm-password" class="small">Confirm Password</label>
                         <input type="password" name="confirm_password" id="confirm-password" class="form-control mb-5"> -->
 
-                <button type="submit" class="btn btn-success w-100" name="btn_sign_up">Sign up</button>
+                <button type="submit" class="btn btn-success w-100" name="btn_register">Register</button>
             </form>
 
             <div class="text-center mt-3">
