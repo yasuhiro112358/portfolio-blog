@@ -1,5 +1,6 @@
 <?php
-include "functions/user-function.php";
+require_once("functions/config.php");
+// include "functions/user-function.php";
 // require "function/user-function.php";
 
 
@@ -9,44 +10,7 @@ if (isset($_POST['btn_register'])) {
 
 
 
-
-
-
-// require "connection.php";
-
-// function createUser($first_name, $last_name, $username, $password) {
-//     $conn = connection();
-
-//     // password encryption
-//     $password = password_hash($password, PASSWORD_DEFAULT);
-
-//     $sql = "INSERT INTO `users` (`first_name`, `last_name`, `username`, `password`) VALUES ('$first_name', '$last_name', '$username', '$password')";
-
-//     if ($conn->query($sql)) {
-//         header("location: login.php");
-//         exit;
-//     } else {
-//         die("Error adding new user: " . $conn->error);
-//     }
-// }
-
-// if (isset($_POST['btn_sign_up'])) {
-//     $first_name = $_POST['first_name'];
-//     $last_name = $_POST['last_name'];
-//     $username = $_POST['username'];
-//     $password = $_POST['password'];
-//     $confirm_password = $_POST['confirm_password'];
-
-//     if ($password == $confirm_password) {
-//         createUser($first_name, $last_name, $username, $password);
-//     } else {
-//         echo "<p class='text-danger text-center'>Password and confirm password do not match</p>";
-//     }
-
-// }
-
 $page_title = "Register";
-
 include("_parts/_header.php");
 ?>
 

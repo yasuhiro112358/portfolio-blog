@@ -1,9 +1,13 @@
 <?php
-$page_title = "Post Details";
+require_once("functions/config.php");
 
+
+
+$page_title = "Post Details";
 include("_parts/_header.php");
 
-include("_parts/_menu.php");
+// Show menu
+showMenu();
 ?>
 
 

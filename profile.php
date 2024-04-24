@@ -1,9 +1,14 @@
 <?php
-$page_title = "Profile";
+require_once("functions/config.php");
 
+
+// Output
+$page_title = "Profile";
 include("_parts/_header.php");
 
-include("_parts/_user-menu.php");
+// Show menu
+showMenu();
+
 ?>
 
 <div class="container-fluid bg-secondary">

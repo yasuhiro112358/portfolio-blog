@@ -1,9 +1,11 @@
 <?php
-$page_title = "";
+require_once("functions/config.php");
 
+$page_title = "";
 include("_parts/_header.php");
 
-include("_parts/_menu.php");
+// Show menu
+showMenu();
 ?>
 
 

@@ -1,4 +1,4 @@
-<div class="container-fluid bg-black">
+<div class="container-fluid bg-dark">
     <p class="text-center text-white m-0 py-3">Copyright &copy; Bloggen Admin</p>
 </div>
 

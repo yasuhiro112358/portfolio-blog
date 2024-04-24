@@ -1,5 +1,8 @@
 <?php
-include "functions/user-function.php";
+require_once("functions/config.php");
+// include "functions/user-function.php";
+
+
 
 if (isset($_POST['btn_enter'])) {
   login();

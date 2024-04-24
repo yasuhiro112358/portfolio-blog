@@ -1,9 +1,13 @@
 <?php
-$page_title = "Add post";
+require_once("functions/config.php");
 
+
+
+$page_title = "Add post";
 include("_parts/_header.php");
 
-include("_parts/_menu.php");
+// Show menu
+showMenu();
 ?>
 
 <div class="container mt-4 mb-4">

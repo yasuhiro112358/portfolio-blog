@@ -1,1 +1,2 @@
-<!-- regular user -->
+<?php
+require_once("connection.php");

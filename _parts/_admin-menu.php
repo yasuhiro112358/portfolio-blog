@@ -27,7 +27,7 @@
                 <li class="nav-item">
                     <a href="profile.php" class="nav-link">
                         <i class="fa-solid fa-user"></i>
-                        Welcome John Smith
+                        <?= $_SESSION['full_name'] ?>
                     </a>
                 </li>
                 <li class="nav-item">

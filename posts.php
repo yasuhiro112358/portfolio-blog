@@ -1,9 +1,14 @@
 <?php
-$page_title = "Posts";
+require_once("functions/config.php");
 
+
+
+
+$page_title = "Posts";
 include("_parts/_header.php");
 
-include("_parts/_menu.php");
+// Show menu
+showMenu();
 ?>
 
 <div class="container-fluid bg-primary">
@@ -15,13 +20,7 @@ include("_parts/_menu.php");
   </div>
 </div>
 
-<div class="container mt-5">
-  <a href="add-post.php" class="btn btn-primary d-block w-75 mx-auto">
-    Add Post
-  </a>
-</div>
-
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
   <div class="table-responsive">
     <table class="table table-striped table-hover">
       <thead class="table-dark">
