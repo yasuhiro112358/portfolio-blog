@@ -24,9 +24,9 @@ include("_parts/_header.php");
       </h1>
 
       <form action="" method="POST">
-        <input type="text" name="username" id="username" class="form-control border border-top-0 border-start-0 border-end-0 border-primary text-black-50 rounded-0 border-2 mb-3" placeholder="USERNAME">
+        <input type="text" name="username" id="username" class="form-control border border-top-0 border-start-0 border-end-0 border-primary text-black-50 rounded-0 border-2 mb-3" placeholder="USERNAME" required>
 
-        <input type="password" name="password" id="password" class="form-control border border-top-0 border-start-0 border-end-0 border-dark text-black-50 rounded-0 border-2 mb-5" placeholder="PASSWORD">
+        <input type="password" name="password" id="password" class="form-control border border-top-0 border-start-0 border-end-0 border-dark text-black-50 rounded-0 border-2 mb-5" placeholder="PASSWORD" required>
 
         <button type="submit" name="btn_enter" class="btn btn-success w-100">ENTER</button>
 

@@ -23,6 +23,27 @@ function getAllCategories()
     }
 }
 
+function getCategoryById($id)
+{
+    // connection to database
+    $conn = connection();
+
+    $sql =
+        "SELECT * 
+        FROM `categories`
+        WHERE `category_id` = $id";
+
+    // execution
+    if ($result = $conn->query($sql)) {
+        while ($category = $result->fetch_assoc()) {
+            return $category;
+        }
+    } else {
+        die("Error retrieving category by ID: " . $conn->error);
+    }
+}
+
+
 function createCategory($category)
 {
     // Connection to Database
@@ -37,5 +58,58 @@ function createCategory($category)
         header("refresh:0");
     } else {
         die("Error adding new product section:" . $conn->error);
+    }
+}
+
+function updateCategory($category_id, $category_name)
+{
+    $conn = connection();
+
+    //SQL Code = update single record
+    $sql = 
+        "UPDATE `categories` 
+        SET `category_name` = '$category_name' 
+        WHERE `category_id` = $category_id";
+
+    if ($conn->query($sql)) {
+        header("location:categories.php");
+        exit;
+    } else {
+        die("Error updating the category:" . $conn->error);
+    }
+}
+
+
+
+function deleteCategory($category_id)
+{
+    $conn = connection();
+
+    $sql = "DELETE FROM `categories` WHERE `category_id` = $category_id";
+
+    if ($conn->query($sql)) {
+        header("location:categories.php");
+        exit;
+    } else {
+        die("Error deleting the category: " . $conn->error);
+    }
+}
+
+function getNumCategories() {
+    // connection to database
+    $conn = connection();
+
+    $sql =
+        "SELECT COUNT(`category_id`) AS `num_categories`
+        FROM `categories`";
+
+    // execution
+    if ($result = $conn->query($sql)) {
+        while ($categories = $result->fetch_assoc()) {
+            $num_categories = $categories['num_categories'];
+        }
+        return $num_categories;
+    } else {
+        die("Error retrieving a number of categories: " . $conn->error);
     }
 }

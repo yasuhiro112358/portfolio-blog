@@ -5,9 +5,24 @@ require_once("functions/config.php");
 $all_categories = getAllCategories();
 // print_r($all_categories);
 
+// Add
 if (isset($_POST['btn_add'])) {
     $category = $_POST['category'];
     createCategory($category);
+}
+
+// Update
+if (isset($_POST['btn_update'])) {
+    $_SESSION['active_category_id'] = $_POST['btn_update'];
+    header("location:update-category.php");
+    exit;
+}
+
+// Delete
+if (isset($_POST['btn_delete'])) {
+    $_SESSION['active_category_id'] = $_POST['btn_delete'];
+    header("location:delete-category.php");
+    exit;
 }
 
 // ==== Output ====
@@ -59,18 +74,20 @@ showMenu();
                 </tr>
             </thead>
             <tbody class="text-center">
-                <?php foreach ($all_categories as $category) : ?>
-                    <tr>
-                        <td><?= $category["id"] ?></td>
-                        <td><?= $category["name"] ?></td>
-                        <td>
-                            <button class="btn btn-warning text-white">Update</button>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+                <form action="" method="post">
+                    <?php foreach ($all_categories as $category) : ?>
+                        <tr>
+                            <td><?= $category["id"] ?></td>
+                            <td><?= $category["name"] ?></td>
+                            <td>
+                                <button type="submit" name="btn_update" value="<?= $category["id"] ?>" class="btn btn-warning text-white">Update</button>
+                            </td>
+                            <td>
+                                <button type="submit" name="btn_delete" value="<?= $category["id"] ?>" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </form>
             </tbody>
         </table>
     </div>

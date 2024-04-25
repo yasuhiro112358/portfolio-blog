@@ -5,8 +5,23 @@ require_once("functions/config.php");
 $all_users = getAllUsers();
 // print_r($all_users);
 
+// Add
 if (isset($_POST['btn_add'])) {
     createUser();
+}
+
+// Update
+if (isset($_POST['btn_update'])) {
+    $_SESSION['active_account_id'] = $_POST['btn_update'];
+    header("location:update-user.php");
+    exit;
+}
+
+// Delete
+if (isset($_POST['btn_delete'])) {
+    $_SESSION['active_account_id'] = $_POST['btn_delete'];
+    header("location:delete-user.php");
+    exit;
 }
 
 // ==== Show HTML ====
@@ -90,21 +105,24 @@ showMenu();
                 </tr>
             </thead>
             <tbody class="">
-                <?php foreach ($all_users as $user) : ?>
-                    <tr>
-                        <td><?= $user['id'] ?></td>
-                        <td><?= $user['full_name'] ?></td>
-                        <td><?= $user['contact_number'] ?></td>
-                        <td><?= $user['address'] ?></td>
-                        <td><?= $user['username'] ?></td>
-                        <td>
-                            <button class="btn btn-warning text-white">Update</button>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
+                <form action="" method="post">
+                    <?php foreach ($all_users as $user) : ?>
+                        <tr>
+                            <!-- must be account_id... -->
+                            <td><?= $user['account_id'] ?></td>
+                            <td><?= $user['full_name'] ?></td>
+                            <td><?= $user['contact_number'] ?></td>
+                            <td><?= $user['address'] ?></td>
+                            <td><?= $user['username'] ?></td>
+                            <td>
+                                <button type="submit" name="btn_update" value="<?= $user["account_id"] ?>" class="btn btn-warning text-white">Update</button>
+                            </td>
+                            <td>
+                                <button type="submit" name="btn_delete" value="<?= $user["account_id"] ?>" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </form>
             </tbody>
         </table>
     </div>

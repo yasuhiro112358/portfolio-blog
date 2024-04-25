@@ -4,7 +4,14 @@ require_once("functions/config.php");
 // ==== Process ====
 $all_posts = getAllPosts();
 // print_r($all_posts);
+$num_posts = getNumPosts();
+$num_categories = getNumCategories();
+$num_users = getNumUsers();
 
+if (isset($_POST['btn_submit_post_id'])) {
+    $_SESSION['active_post_id'] = $_POST['btn_submit_post_id'];
+    header("location:post-details.php");
+}
 
 // ==== Show HTML ====
 $page_title = "Dashboard";
@@ -49,10 +56,12 @@ showMenu();
                                 <td><?= $post['category'] ?></td>
                                 <td><?= $post['date_posted'] ?></td>
                                 <td>
-                                    <button class="btn btn-outline-dark">
-                                        <i class="fa-solid fa-angles-right"></i>
-                                        Details
-                                    </button>
+                                    <form action="" method="post">
+                                        <button type="submit" name="btn_submit_post_id" value="<?= $post['id'] ?>" class="btn btn-outline-dark">
+                                            <i class="fa-solid fa-angles-right"></i>
+                                            Details
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -68,7 +77,7 @@ showMenu();
                     <h3>Posts</h3>
                     <p class="h4">
                         <i class="fa-solid fa-pen"></i>
-                        2
+                        <?= $num_posts ?>
                     </p>
                     <a href="posts.php" class="btn btn-outline-light btn-sm">
                         VIEW
@@ -85,7 +94,7 @@ showMenu();
                     <h3>Categories</h3>
                     <p class="h4">
                         <i class="fa-solid fa-folder-open"></i>
-                        3
+                        <?= $num_categories ?>
                     </p>
                     <a href="categories.php" class="btn btn-outline-light btn-sm">
                         VIEW
@@ -102,7 +111,7 @@ showMenu();
                     <h3>Users</h3>
                     <p class="h4">
                         <i class="fa-solid fa-users"></i>
-                        2
+                        <?= $num_users ?>
                     </p>
                     <a href="users.php" class="btn btn-outline-light btn-sm">
                         VIEW

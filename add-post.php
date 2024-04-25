@@ -1,24 +1,31 @@
 <?php
 require_once("functions/config.php");
 
-// ==== Process ====
+// ==== Input ====
 $all_categories = getAllCategories();
-
-// print_r($_SESSION);
+// print_r($all_categories);
 
 if ($_SESSION['role'] == "A") {
-    $all_users = getAllUsers();
+    $usernames = getAllUsernames();
 } elseif ($_SESSION['role'] == "U") {
-    $user = getUser($_SESSION['account_id']);
+    $usernames = getUsername($_SESSION['account_id']);
 }
-// print_r($all_users);
-// print_r($user);
+// print_r($usernames);
 
+// ==== Process ====
 if (isset($_POST['btn_post'])) {
-    // createPost();
+    $post_title = $_POST['title'];
+    $post_message = $_POST['message'];
+    $date_posted = $_POST['date'];
+    $account_id = $_POST['account_id'];
+    $category_id = $_POST['category_id'];
+
+    createPost($post_title, $post_message, $date_posted, $account_id, $category_id);
+
+    header("location:posts.php");
 }
 
-// Output
+// ==== Output ====
 $page_title = "Add post";
 include("_parts/_header.php");
 
@@ -49,10 +56,10 @@ showMenu();
 
                 <div class="row mb-3">
                     <div class="col">
-                        <select name="category" id="category" class="form-select border border-top-0 border-start-0 border-end-0 border-dark text-black-50 rounded-0 border-2">
+                        <select name="category_id" id="category-id" class="form-select border border-top-0 border-start-0 border-end-0 border-dark text-black-50 rounded-0 border-2">
                             <option value="" hidden>CATEGORY</option>
                             <?php foreach ($all_categories as $category) : ?>
-                                <option value="<?= $category["name"] ?>"><?= $category["name"] ?></option>
+                                <option value="<?= $category["id"] ?>"><?= $category["name"] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -69,40 +76,35 @@ showMenu();
                     <div class="col">
                         <div class="input-group">
                             <span class="input-group-text bg-secondary text-white rounded-0">Author</span>
-                            <select name="author" id="author" class="form-select border border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark">
-                                <!-- Admin -->
-                                <?php if ($_SESSION['role'] == "A") : ?>
-                                    <?php foreach ($all_users as $user) : ?>
-                                        <?php if ($user['id'] == $_SESSION['account_id']) : ?>
-                                            <option value="<?= $user['username'] ?>" selected>
-                                                <?= $user['username'] ?>
-                                            </option>
-                                        <?php else : ?>
-                                            <option value="<?= $user['username'] ?>">
-                                                <?= $user['username'] ?>
-                                            </option>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-
-                                    <!-- User -->
-                                <?php elseif ($_SESSION['role'] == "U") : ?>
-                                    
-                                        <option value="<?= $user['username'] ?>" selected>
-                                            <?= $user['username'] ?>
+                            <select name="account_id" id="author" class="form-select border border-top-0 border-start-0 border-end-0 rounded-0 border-2 border-dark">
+                                <?php foreach ($usernames as $username) : ?>
+                                    <?php if ($username['account_id'] == $_SESSION['account_id']) : ?>
+                                        <option value="<?= $username['account_id'] ?>" selected>
+                                            <?= $username['username'] ?>
                                         </option>
-                                    
-                                <?php endif; ?>
+                                    <?php else : ?>
+                                        <option value="<?= $username['account_id'] ?>">
+                                            <?= $username['username'] ?>
+                                        </option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <button type="submit" name="btn_post" class="btn btn-dark w-100">POST</button>
-                    </div>
+                <div class="row mb-3">
+                    <!-- <div class="col"> -->
+                    <button type="submit" name="btn_post" class="btn btn-dark w-100">POST</button>
+                    <!-- </div> -->
                 </div>
             </form>
+
+            <div class="row">
+                <!-- <div class="col"> -->
+                <a href="posts.php" class="btn btn-dark w-100">GO BACK</a>
+                <!-- </div> -->
+            </div>
         </div>
     </div>
 </div>
