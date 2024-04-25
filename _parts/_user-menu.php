@@ -13,7 +13,7 @@
                     <a href="posts.php" class="nav-link">My Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a href="add-post-by-user.php" class="nav-link">Add Post</a>
+                    <a href="add-post.php" class="nav-link">Add Post</a>
                 </li>
             </ul>
             <!-- right menu -->

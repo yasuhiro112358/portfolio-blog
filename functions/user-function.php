@@ -128,6 +128,32 @@ function getAllUsers()
     }
 }
 
+function getUser($account_id)
+{
+    // connection to database
+    $conn = connection();
+
+    $sql =
+        "SELECT 
+        `users`.`user_id` AS `id`,
+        CONCAT(`users`.`first_name`, ' ', `users`.`last_name`) AS `full_name`,
+        `users`.`contact_number` AS `contact_number`,
+        `users`.`address` AS `address`,
+        `accounts`.`username` AS `username`
+        FROM `users`
+        INNER JOIN `accounts` ON `users`.`account_id` = `accounts`.`account_id`
+        WHERE `users`.`account_id` = $account_id";
+
+    // execution
+    if ($result = $conn->query($sql)) {
+        while ($user = $result->fetch_assoc()) {
+            return $user;
+        }
+    } else {
+        die("Error retrieving logged in user: " . $conn->error);
+    }
+}
+
 function createUser()
 {
     $conn = connection();
