@@ -11,6 +11,7 @@ $user = getUser($account_id);
 // Delete
 if (isset($_POST['btn_delete'])) {
     deleteUser($account_id);
+    header("location:users.php");
 }
 
 // ==== Output ====

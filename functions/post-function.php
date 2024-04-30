@@ -1,7 +1,8 @@
 <?php
 require_once("connection.php");
 
-function createPost($post_title, $post_message, $date_posted, $account_id, $category_id) {
+function createPost($post_title, $post_message, $date_posted, $account_id, $category_id)
+{
     $conn = connection();
 
     $sql =
@@ -108,7 +109,8 @@ function getPostById($post_id)
     }
 }
 
-function getNumPosts() {
+function getNumPosts()
+{
     // connection to database
     $conn = connection();
 
@@ -127,4 +129,23 @@ function getNumPosts() {
     }
 }
 
+function updatePost($post_id, $post_title, $post_message, $date_posted, $account_id, $category_id)
+{
+    $conn = connection();
 
+    $sql =
+        "UPDATE `posts` 
+        SET 
+            `post_title` = '$post_title', 
+            `post_message` = '$post_message', 
+            `date_posted` = '$date_posted', 
+            `account_id` = '$account_id', 
+            `category_id` = '$category_id' 
+        WHERE `post_id` = $post_id";
+
+    if ($conn->query($sql)) {
+        return;
+    } else {
+        die("Error updating the record:" . $conn->error);
+    }
+}

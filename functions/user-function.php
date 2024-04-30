@@ -90,9 +90,6 @@ function getFullName($account_id)
     }
 }
 
-
-
-
 function createUser()
 {
     $conn = connection();
@@ -229,6 +226,7 @@ function getUserInfo($account_id)
     }
 }
 
+// For Admin
 function updateUserInfo($account_id, $first_name, $last_name, $address, $contact_number, $username)
 {
     $conn = connection();
@@ -252,6 +250,45 @@ function updateUserInfo($account_id, $first_name, $last_name, $address, $contact
     }
 }
 
+// For Users
+function updateUserProfile($account_id, $first_name, $last_name, $address, $contact_number, $username, $avatar_name, $avatar_temp)
+{
+    $conn = connection();
+
+    if ($avatar_name == "") {
+        $sql =
+            "UPDATE `users` 
+            INNER JOIN `accounts` ON `users`.`account_id` = `accounts`.`account_id`
+            SET 
+                `users`.`first_name` = '$first_name',
+                `users`.`last_name` = '$last_name',
+                `users`.`address` = '$address',
+                `users`.`contact_number` = '$contact_number',
+                `accounts`.`username` = '$username'
+            WHERE `users`.`account_id` = $account_id";
+    } else {
+        $sql =
+            "UPDATE `users` 
+            INNER JOIN `accounts` ON `users`.`account_id` = `accounts`.`account_id`
+            SET 
+                `users`.`first_name` = '$first_name',
+                `users`.`last_name` = '$last_name',
+                `users`.`address` = '$address',
+                `users`.`contact_number` = '$contact_number',
+                `accounts`.`username` = '$username',
+                `users`.`avatar` = '$avatar_name'
+            WHERE `users`.`account_id` = $account_id";
+    }
+
+    if ($conn->query($sql)) {
+        $destination = "img/$avatar_name";
+        move_uploaded_file($avatar_temp, $destination);
+        return;
+    } else {
+        die("Error updating the user profile:" . $conn->error);
+    }
+}
+
 function deleteUser($account_id)
 {
     $conn = connection();
@@ -270,8 +307,8 @@ function deleteUser($account_id)
         if (!$conn->query($sql_users)) {
             die("Error deleting the user linked to the account: " . $conn->error);
         } else {
-            header("location:users.php");
-            exit;
+            // header("location:users.php");
+            // exit;
         }
     }
 }
@@ -354,5 +391,23 @@ function getUsername($account_id)
         return $usernames;
     } else {
         die("Error retrieving username by ID: " . $conn->error);
+    }
+}
+
+
+function updatePassword($account_id, $new_password) {
+    $new_password = password_hash($new_password, PASSWORD_DEFAULT);
+    
+    $conn = connection();
+
+    $sql =
+        "UPDATE `accounts` 
+        SET `password` = '$new_password'
+        WHERE `account_id` = $account_id";
+
+    if ($conn->query($sql)) {
+        return;
+    } else {
+        die("Error updating the password:" . $conn->error);
     }
 }

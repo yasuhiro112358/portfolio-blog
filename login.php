@@ -34,9 +34,11 @@ include("_parts/_header.php");
           <div class="col p-4">
             <a href="register.php" class="text-black-50">Create an Account</a>
           </div>
-          <div class="col p-4">
+
+          <!-- <div class="col p-4">
             <a href="" class="text-black-50">Recover Account</a>
-          </div>
+          </div> -->
+
         </div>
       </form>
 

@@ -33,6 +33,7 @@ showMenu();
 
             <div class="row mb-3">
                 <div class="col">
+                    <!-- To show correctly, choosing type as "text"  -->
                     <input type="text" name="date" id="date" class="form-control border border-top-0 border-start-0 border-end-0 border-dark text-black-50 rounded-0 border-2" placeholder="<?= $post['date_posted'] ?>" disabled>
                 </div>
             </div>
@@ -77,7 +78,7 @@ showMenu();
 
             <div class="row">
                 <!-- <div class="col"> -->
-                <a href="posts.php" class="btn btn-dark w-100">GO BACK</a>
+                <a href="posts.php" class="btn btn-dark w-100">Back to All Posts</a>
                 <!-- </div> -->
             </div>
             <!-- </form> -->
