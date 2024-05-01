@@ -1,16 +1,19 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Input ====
 $account_id = $_SESSION['account_id'];
 
 // ==== Process ====
-$user = getUser($account_id);
+$user = getUser($mysqli, $account_id);
 // print_r($user);
 
 // Delete
 if (isset($_POST['btn_delete'])) {
-    deleteUser($account_id);
+    deleteUser($mysqli, $account_id);
+    
     header("location:register.php");
 }
 
@@ -31,7 +34,7 @@ showMenu();
     <div class="card-body">
         <div class="text-center mb-4">
             <i class="fas fa-exclamation-triangle text-warning display-4 d-block mb-2"></i>
-            <p class="fw-bold mb-0">Are you sure you want to delete the account for "<?= $user['username'] ?> (<?= $user['full_name'] ?>)"?</p>
+            <p class="fw-bold mb-0">Are you sure you want to delete the account for "<?= $user['username'] ?> (<?= $user['full_name'] ?>)" and all their posts?</p>
         </div>
 
         <div class="row">

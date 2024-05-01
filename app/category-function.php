@@ -1,10 +1,10 @@
 <?php
 // require_once("connection.php");
 
-function getAllCategories()
+function getAllCategories($conn)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT 
@@ -23,10 +23,10 @@ function getAllCategories()
     }
 }
 
-function getCategoryById($id)
+function getCategoryById($conn, $id)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT * 
@@ -44,10 +44,10 @@ function getCategoryById($id)
 }
 
 
-function createCategory($category)
+function createCategory($conn, $category)
 {
     // Connection to Database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "INSERT INTO `categories` (`category_name`) 
@@ -61,9 +61,9 @@ function createCategory($category)
     }
 }
 
-function updateCategory($category_id, $category_name)
+function updateCategory($conn, $category_id, $category_name)
 {
-    $conn = connection();
+    // $conn = connection();
 
     //SQL Code = update single record
     $sql = 
@@ -81,9 +81,9 @@ function updateCategory($category_id, $category_name)
 
 
 
-function deleteCategory($category_id)
+function deleteCategory($conn, $category_id)
 {
-    $conn = connection();
+    // $conn = connection();
 
     $sql = "DELETE FROM `categories` WHERE `category_id` = $category_id";
 
@@ -95,9 +95,9 @@ function deleteCategory($category_id)
     }
 }
 
-function getNumCategories() {
+function getNumCategories($conn) {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT COUNT(`category_id`) AS `num_categories`

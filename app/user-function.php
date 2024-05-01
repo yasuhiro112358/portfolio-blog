@@ -1,9 +1,9 @@
 <?php
 // require_once("connection.php");
 
-function register()
+function register($conn)
 {
-    $conn = connection();
+    // $conn = connection();
 
     // data from the form
     $first_name = $_POST['first_name'];
@@ -36,9 +36,9 @@ function register()
 }
 
 // Login function
-function login()
+function login($conn)
 {
-    $conn = connection();
+    // $conn = connection();
 
     // from data
     $username = $_POST['username'];
@@ -57,7 +57,7 @@ function login()
                 session_start();
                 $_SESSION['account_id'] = $user_details['account_id'];
                 $_SESSION['role'] = $user_details['role'];
-                $_SESSION['full_name'] = getFullName($user_details['account_id']);
+                $_SESSION['full_name'] = getFullName($conn, $user_details['account_id']);
 
                 if ($user_details['role'] == "A") {
                     header("location:dashboard.php");
@@ -76,9 +76,9 @@ function login()
     }
 }
 
-function getFullName($account_id)
+function getFullName($conn, $account_id)
 {
-    $conn = connection();
+    // $conn = connection();
 
     $sql = "SELECT `first_name`, `last_name` FROM `users` WHERE `account_id` = '$account_id'";
 
@@ -90,9 +90,9 @@ function getFullName($account_id)
     }
 }
 
-function createUser()
+function createUser($conn)
 {
-    $conn = connection();
+    // $conn = connection();
 
     // data from the form
     $first_name = $_POST['first_name'];
@@ -142,10 +142,10 @@ function showMenu()
 }
 
 
-function getAllUsers()
+function getAllUsers($conn)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT 
@@ -169,10 +169,10 @@ function getAllUsers()
     }
 }
 
-function getUser($account_id)
+function getUser($conn, $account_id)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT 
@@ -195,10 +195,10 @@ function getUser($account_id)
     }
 }
 
-function getUserInfo($account_id)
+function getUserInfo($conn, $account_id)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     // if (password_verify($password, $user_details['password'])) {
 
@@ -227,9 +227,9 @@ function getUserInfo($account_id)
 }
 
 // For Admin
-function updateUserInfo($account_id, $first_name, $last_name, $address, $contact_number, $username)
+function updateUserInfo($conn, $account_id, $first_name, $last_name, $address, $contact_number, $username)
 {
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "UPDATE `users` 
@@ -251,9 +251,9 @@ function updateUserInfo($account_id, $first_name, $last_name, $address, $contact
 }
 
 // For Users
-function updateUserProfile($account_id, $first_name, $last_name, $address, $contact_number, $username, $avatar_name, $avatar_temp)
+function updateUserProfile($conn, $account_id, $first_name, $last_name, $address, $contact_number, $username, $avatar_name, $avatar_temp)
 {
-    $conn = connection();
+    // $conn = connection();
 
     if ($avatar_name == "") {
         $sql =
@@ -289,9 +289,9 @@ function updateUserProfile($account_id, $first_name, $last_name, $address, $cont
     }
 }
 
-function deleteUser($account_id)
+function deleteUser($conn, $account_id)
 {
-    $conn = connection();
+    // $conn = connection();
 
     $sql_accounts =
         "DELETE FROM `accounts`
@@ -301,22 +301,27 @@ function deleteUser($account_id)
         "DELETE FROM `users`
         WHERE `account_id` = $account_id";
 
+    $sql_posts =
+        "DELETE FROM `posts`
+        WHERE `account_id` = $account_id";
+
     if (!$conn->query($sql_accounts)) {
         die("Error deleting the account: " . $conn->error);
     } else {
         if (!$conn->query($sql_users)) {
             die("Error deleting the user linked to the account: " . $conn->error);
         } else {
-            // header("location:users.php");
-            // exit;
+            if (!$conn->query($sql_posts)) {
+                die("Error deleting the posts linked to the account: " . $conn->error);
+            }
         }
     }
 }
 
-function getNumUsers()
+function getNumUsers($conn)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT COUNT(`user_id`) AS `num_users`
@@ -333,9 +338,9 @@ function getNumUsers()
     }
 }
 
-function getAccountPassword($account_id)
+function getAccountPassword($conn, $account_id)
 {
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT `password`
@@ -352,9 +357,9 @@ function getAccountPassword($account_id)
     }
 }
 
-function getAllUsernames()
+function getAllUsernames($conn)
 {
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT
@@ -372,9 +377,9 @@ function getAllUsernames()
     }
 }
 
-function getUsername($account_id)
+function getUsername($conn, $account_id)
 {
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT
@@ -395,10 +400,11 @@ function getUsername($account_id)
 }
 
 
-function updatePassword($account_id, $new_password) {
+function updatePassword($conn, $account_id, $new_password)
+{
     $new_password = password_hash($new_password, PASSWORD_DEFAULT);
-    
-    $conn = connection();
+
+    // $conn = connection();
 
     $sql =
         "UPDATE `accounts` 

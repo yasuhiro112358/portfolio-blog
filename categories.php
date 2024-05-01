@@ -1,14 +1,16 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Process ====
-$all_categories = getAllCategories();
+$all_categories = getAllCategories($mysqli);
 // print_r($all_categories);
 
 // Add
 if (isset($_POST['btn_add'])) {
     $category = $_POST['category'];
-    createCategory($category);
+    createCategory($mysqli, $category);
 }
 
 // Update

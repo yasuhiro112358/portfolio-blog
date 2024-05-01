@@ -8,7 +8,7 @@ define("DB_PASS", "root");
 define("DB_NAME", "blog");
 
 // Functions
-require_once("connection.php");
+// require_once("connection.php");
 require_once("category-function.php");
 require_once("post-function.php");
 require_once("user-function.php");

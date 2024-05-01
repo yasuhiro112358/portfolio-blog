@@ -1,12 +1,14 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Process ====
-$all_posts = getAllPosts();
+$all_posts = getAllPosts($mysqli);
 // print_r($all_posts);
-$num_posts = getNumPosts();
-$num_categories = getNumCategories();
-$num_users = getNumUsers();
+$num_posts = getNumPosts($mysqli);
+$num_categories = getNumCategories($mysqli);
+$num_users = getNumUsers($mysqli);
 
 if (isset($_POST['btn_submit_post_id'])) {
     $_SESSION['active_post_id'] = $_POST['btn_submit_post_id'];

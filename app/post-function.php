@@ -1,9 +1,9 @@
 <?php
 // require_once("connection.php");
 
-function createPost($post_title, $post_message, $date_posted, $account_id, $category_id)
+function createPost($conn, $post_title, $post_message, $date_posted, $account_id, $category_id)
 {
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "INSERT INTO `posts` (
@@ -26,10 +26,10 @@ function createPost($post_title, $post_message, $date_posted, $account_id, $cate
     }
 }
 
-function getAllPosts()
+function getAllPosts($conn)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT 
@@ -53,10 +53,10 @@ function getAllPosts()
     }
 }
 
-function getUserPosts($account_id)
+function getUserPosts($conn, $account_id)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT 
@@ -72,6 +72,7 @@ function getUserPosts($account_id)
 
     // execution
     if ($result = $conn->query($sql)) {
+        $all_posts = [];
         while ($post = $result->fetch_assoc()) {
             $all_posts[] = $post;
         }
@@ -81,10 +82,10 @@ function getUserPosts($account_id)
     }
 }
 
-function getPostById($post_id)
+function getPostById($conn, $post_id)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT 
@@ -109,10 +110,10 @@ function getPostById($post_id)
     }
 }
 
-function getNumPosts()
+function getNumPosts($conn)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT COUNT(`post_id`) AS `num_posts`
@@ -129,9 +130,9 @@ function getNumPosts()
     }
 }
 
-function updatePost($post_id, $post_title, $post_message, $date_posted, $account_id, $category_id)
+function updatePost($conn, $post_id, $post_title, $post_message, $date_posted, $account_id, $category_id)
 {
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "UPDATE `posts` 

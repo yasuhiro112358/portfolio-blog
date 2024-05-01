@@ -1,10 +1,12 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // print_r($_SESSION);
 
 // ==== Process ====
-$user_posts = getUserPosts($_SESSION['account_id']);
+$user_posts = getUserPosts($mysqli, $_SESSION['account_id']);
 // print_r($user_posts);
 
 if (isset($_POST['btn_submit_post_id'])) {

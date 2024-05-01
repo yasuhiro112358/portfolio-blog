@@ -1,13 +1,15 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Process ====
-$all_users = getAllUsers();
+$all_users = getAllUsers($mysqli);
 // print_r($all_users);
 
 // Add
 if (isset($_POST['btn_add'])) {
-    createUser();
+    createUser($mysqli);
 }
 
 // Update
