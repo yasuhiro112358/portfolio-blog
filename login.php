@@ -1,12 +1,19 @@
 <?php
-require_once("functions/config.php");
+require_once("app/config.php");
 // include "functions/user-function.php";
+
+
+$mysqli = Database::getInstance();
+print_r($mysqli);
+
+
 
 
 
 if (isset($_POST['btn_enter'])) {
   login();
 }
+
 
 
 

@@ -1,5 +1,5 @@
 <?php
-require_once("functions/config.php");
+require_once("app/config.php");
 
 // ==== Input ====
 // $account_id = $_SESSION['active_account_id'];
@@ -52,14 +52,15 @@ showMenu();
     </div>
 </div>
 
+
 <div class="container-fluid bg-light py-4">
     <div class="container d-flex justify-content-center">
-        <a href="update-password.php" class="btn btn-primary mx-3">Change Password</a>
-
-        <?php if ($_SESSION['role'] != "A") : ?>
+        <?php if ($_SESSION['role'] == "A") : ?>
+            <a href="" class="btn btn-secondary mx-3">Change Password (disabled)</a>
+            <a href="" class="btn btn-secondary mx-3">Delete Account (disabled)</a>
+        <?php elseif ($_SESSION['role'] == "U") : ?>
+            <a href="update-password.php" class="btn btn-primary mx-3">Change Password</a>
             <a href="delete-account.php" class="btn btn-danger mx-3">Delete Account</a>
-        <?php else : ?>
-            <!-- <a href="" class="btn btn-dark mx-3">Delete Account</a> -->
         <?php endif; ?>
     </div>
 </div>
@@ -138,9 +139,15 @@ showMenu();
 
                 <div class="row">
                     <div class="col-md-8">
-                        <button type="submit" name="btn_update" class="btn btn-primary w-100">
-                            UPDATE
-                        </button>
+                        <?php if ($_SESSION['role'] == "A") : ?>
+                            <a href="" class="btn btn-secondary w-100">
+                                UPDATE (disabled)
+                            </a>
+                        <?php elseif ($_SESSION['role'] == "U") : ?>
+                            <button type="submit" name="btn_update" class="btn btn-primary w-100">
+                                UPDATE
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
             </form>

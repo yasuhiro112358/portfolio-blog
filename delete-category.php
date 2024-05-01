@@ -1,5 +1,5 @@
 <?php
-require_once("functions/config.php");
+require_once("app/config.php");
 
 // ==== Input ====
 $category_id = $_SESSION['active_category_id'];

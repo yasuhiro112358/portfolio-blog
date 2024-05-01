@@ -1,5 +1,6 @@
 <?php
 
+// function connection($server_name, $username, $password, $db_name) {
 function connection() {
     // details of database
     $server_name = "localhost";

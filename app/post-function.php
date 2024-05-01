@@ -1,5 +1,5 @@
 <?php
-require_once("connection.php");
+// require_once("connection.php");
 
 function createPost($post_title, $post_message, $date_posted, $account_id, $category_id)
 {
