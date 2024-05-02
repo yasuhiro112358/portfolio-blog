@@ -3,9 +3,7 @@
 
 function createPost($conn, $post_title, $post_message, $date_posted, $account_id, $category_id)
 {
-    // $conn = connection();
-
-    $sql =
+    $stmt = $conn->prepare(
         "INSERT INTO `posts` (
             `post_title`,
             `post_message`,
@@ -13,13 +11,16 @@ function createPost($conn, $post_title, $post_message, $date_posted, $account_id
             `account_id`,
             `category_id`) 
         VALUES (
-            '$post_title',
-            '$post_message',
-            '$date_posted',
-            '$account_id',
-            '$category_id')";
+            ?,
+            ?,
+            ?,
+            ?,
+            ?)"
+    );
 
-    if ($conn->query($sql)) {
+    $stmt->bind_param("sssii", $post_title, $post_message, $date_posted, $account_id, $category_id);
+
+    if ($stmt->execute()) {
         return;
     } else {
         die("Error adding new post:" . $conn->error);
@@ -132,19 +133,20 @@ function getNumPosts($conn)
 
 function updatePost($conn, $post_id, $post_title, $post_message, $date_posted, $account_id, $category_id)
 {
-    // $conn = connection();
-
-    $sql =
+    $stmt = $conn->prepare(
         "UPDATE `posts` 
         SET 
-            `post_title` = '$post_title', 
-            `post_message` = '$post_message', 
-            `date_posted` = '$date_posted', 
-            `account_id` = '$account_id', 
-            `category_id` = '$category_id' 
-        WHERE `post_id` = $post_id";
+            `post_title` = ?, 
+            `post_message` = ?, 
+            `date_posted` = ?, 
+            `account_id` = ?, 
+            `category_id` = ? 
+        WHERE `post_id` = ?"
+    );
 
-    if ($conn->query($sql)) {
+    $stmt->bind_param("sssiii", $post_title, $post_message, $date_posted, $account_id, $category_id, $post_id);
+
+    if ($stmt->execute()) {
         return;
     } else {
         die("Error updating the record:" . $conn->error);
