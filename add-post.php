@@ -1,14 +1,16 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Input ====
-$all_categories = getAllCategories();
+$all_categories = getAllCategories($mysqli);
 // print_r($all_categories);
 
 if ($_SESSION['role'] == "A") {
-    $usernames = getAllUsernames();
+    $usernames = getAllUsernames($mysqli);
 } elseif ($_SESSION['role'] == "U") {
-    $usernames = getUsername($_SESSION['account_id']);
+    $usernames = getUsername($mysqli, $_SESSION['account_id']);
 }
 // print_r($usernames);
 
@@ -20,7 +22,7 @@ if (isset($_POST['btn_post'])) {
     $account_id = $_POST['account_id'];
     $category_id = $_POST['category_id'];
 
-    createPost($post_title, $post_message, $date_posted, $account_id, $category_id);
+    createPost($mysqli, $post_title, $post_message, $date_posted, $account_id, $category_id);
 
     header("location:posts.php");
 }

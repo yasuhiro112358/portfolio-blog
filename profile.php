@@ -1,19 +1,21 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Input ====
 // $account_id = $_SESSION['active_account_id'];
 $account_id = $_SESSION['account_id'];
 
 // ==== Process ====
-$user_info = getUserInfo($account_id);
+$user_info = getUserInfo($mysqli, $account_id);
 // print_r($user_info);
 
 // Update
 if (isset($_POST['btn_update'])) {
     // $account_id is coming from $_SESSION['active_account_id']
     $password = $_POST['password'];
-    $account_password = getAccountPassword($account_id);
+    $account_password = getAccountPassword($mysqli, $account_id);
 
     if (!password_verify($password, $account_password)) {
         die("Error: Incorrect password");
@@ -27,7 +29,7 @@ if (isset($_POST['btn_update'])) {
         $avatar_name = $_FILES['avatar']['name'];
         $avatar_temp = $_FILES['avatar']['tmp_name'];
 
-        updateUserProfile($account_id, $first_name, $last_name, $address, $contact_number, $username, $avatar_name, $avatar_temp);
+        updateUserProfile($mysqli, $account_id, $first_name, $last_name, $address, $contact_number, $username, $avatar_name, $avatar_temp);
 
         header("refresh:0");
         exit;

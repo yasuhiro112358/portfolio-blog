@@ -1,14 +1,11 @@
 <?php
 require_once("app/config.php");
-// include "functions/user-function.php";
-// require "function/user-function.php";
 
+$mysqli = Database::getInstance();
 
 if (isset($_POST['btn_register'])) {
-    register();
+    register($mysqli);
 }
-
-
 
 $page_title = "Register";
 include("_parts/_header.php");

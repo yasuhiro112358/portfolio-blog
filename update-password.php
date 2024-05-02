@@ -1,6 +1,8 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Input ====
 $account_id = $_SESSION['account_id'];
 
@@ -9,7 +11,7 @@ $account_id = $_SESSION['account_id'];
 // Update
 if (isset($_POST['btn_update'])) {
     $current_password = $_POST['current_password'];
-    $account_password = getAccountPassword($account_id);
+    $account_password = getAccountPassword($mysqli, $account_id);
 
     if (!password_verify($current_password, $account_password)) {
         die("Error: Current password is incorrect");
@@ -20,7 +22,7 @@ if (isset($_POST['btn_update'])) {
         if (!($confirm_password == $new_password)) {
             die("Error: Confirm Password does NOT match");
         } else {
-            updatePassword($account_id, $new_password);
+            updatePassword($mysqli, $account_id, $new_password);
 
             header('location:profile.php');
             exit;

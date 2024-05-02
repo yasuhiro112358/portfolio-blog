@@ -1,17 +1,19 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Input ====
 $category_id = $_SESSION['active_category_id'];
 
 // ==== Process ====
-$category = getCategoryById($category_id);
+$category = getCategoryById($mysqli, $category_id);
 print_r($category);
 
 // Update
 if (isset($_POST['btn_update'])) {
     $category_name = $_POST['category'];
-    updateCategory($category_id, $category_name);
+    updateCategory($mysqli, $category_id, $category_name);
 }
 
 
@@ -51,8 +53,6 @@ showMenu();
         </div>
     </div>
 </div>
-
-
 
 <?php
 include("_parts/_footer.php");

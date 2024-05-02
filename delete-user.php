@@ -1,16 +1,18 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Input ====
 $account_id = $_SESSION['active_account_id'];
 
 // ==== Process ====
-$user = getUser($account_id);
+$user = getUser($mysqli, $account_id);
 // print_r($user);
 
 // Delete
 if (isset($_POST['btn_delete'])) {
-    deleteUser($account_id);
+    deleteUser($mysqli, $account_id);
     header("location:users.php");
 }
 
@@ -50,71 +52,6 @@ showMenu();
 
 </main>
 
-
-
-
 <?php
 include("_parts/_footer.php");
-
-?>
-
-
-<?php
-// // 
-// // This page needs to have $_GET['id']
-// // 
-
-// require "connection.php";
-
-// // Functions
-// function getProduct($id)
-// {
-//     $conn  = connection();
-
-//     //SQL code
-//     $sql = "SELECT * FROM products WHERE id = $id";
-//     //specific record only
-//     if ($result = $conn->query($sql)) {
-//         return $result->fetch_assoc();
-//         // return an associative array
-//     } else {
-//         die("Error retrieving all products: " . $conn->error);
-//     }
-// }
-
-// //delete specific record
-// function deleteProduct($id)
-// {
-//     $conn = connection();
-
-//     //sql code = delete single record
-//     $sql = "DELETE FROM products WHERE id = $id";
-
-//     if ($conn->query($sql)) {
-//         header("location:products.php");
-//         exit;
-//     } else {
-//         die("Error deleting the product: " . $conn->error);
-//     }
-// }
-
-
-// // Main
-// // Error here
-// $id = $_GET['id'];
-// // for check
-// // echo $id;
-// // var_dump($id);
-
-// $product = getProduct($id);
-// // print_r($product);
-
-// // When delete button pushed
-// if (isset($_POST['btn_delete'])) {
-//     $id = $_GET['id'];
-//     // $id = $_POST['id'];
-
-//     deleteProduct($id);
-// }
-
 ?>

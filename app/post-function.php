@@ -1,11 +1,9 @@
 <?php
 // require_once("connection.php");
 
-function createPost($post_title, $post_message, $date_posted, $account_id, $category_id)
+function createPost($conn, $post_title, $post_message, $date_posted, $account_id, $category_id)
 {
-    $conn = connection();
-
-    $sql =
+    $stmt = $conn->prepare(
         "INSERT INTO `posts` (
             `post_title`,
             `post_message`,
@@ -13,23 +11,26 @@ function createPost($post_title, $post_message, $date_posted, $account_id, $cate
             `account_id`,
             `category_id`) 
         VALUES (
-            '$post_title',
-            '$post_message',
-            '$date_posted',
-            '$account_id',
-            '$category_id')";
+            ?,
+            ?,
+            ?,
+            ?,
+            ?)"
+    );
 
-    if ($conn->query($sql)) {
+    $stmt->bind_param("sssii", $post_title, $post_message, $date_posted, $account_id, $category_id);
+
+    if ($stmt->execute()) {
         return;
     } else {
         die("Error adding new post:" . $conn->error);
     }
 }
 
-function getAllPosts()
+function getAllPosts($conn)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT 
@@ -53,10 +54,10 @@ function getAllPosts()
     }
 }
 
-function getUserPosts($account_id)
+function getUserPosts($conn, $account_id)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT 
@@ -72,6 +73,7 @@ function getUserPosts($account_id)
 
     // execution
     if ($result = $conn->query($sql)) {
+        $all_posts = [];
         while ($post = $result->fetch_assoc()) {
             $all_posts[] = $post;
         }
@@ -81,10 +83,10 @@ function getUserPosts($account_id)
     }
 }
 
-function getPostById($post_id)
+function getPostById($conn, $post_id)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT 
@@ -109,10 +111,10 @@ function getPostById($post_id)
     }
 }
 
-function getNumPosts()
+function getNumPosts($conn)
 {
     // connection to database
-    $conn = connection();
+    // $conn = connection();
 
     $sql =
         "SELECT COUNT(`post_id`) AS `num_posts`
@@ -129,21 +131,22 @@ function getNumPosts()
     }
 }
 
-function updatePost($post_id, $post_title, $post_message, $date_posted, $account_id, $category_id)
+function updatePost($conn, $post_id, $post_title, $post_message, $date_posted, $account_id, $category_id)
 {
-    $conn = connection();
-
-    $sql =
+    $stmt = $conn->prepare(
         "UPDATE `posts` 
         SET 
-            `post_title` = '$post_title', 
-            `post_message` = '$post_message', 
-            `date_posted` = '$date_posted', 
-            `account_id` = '$account_id', 
-            `category_id` = '$category_id' 
-        WHERE `post_id` = $post_id";
+            `post_title` = ?, 
+            `post_message` = ?, 
+            `date_posted` = ?, 
+            `account_id` = ?, 
+            `category_id` = ? 
+        WHERE `post_id` = ?"
+    );
 
-    if ($conn->query($sql)) {
+    $stmt->bind_param("sssiii", $post_title, $post_message, $date_posted, $account_id, $category_id, $post_id);
+
+    if ($stmt->execute()) {
         return;
     } else {
         die("Error updating the record:" . $conn->error);

@@ -1,22 +1,11 @@
 <?php
 require_once("app/config.php");
-// include "functions/user-function.php";
-
 
 $mysqli = Database::getInstance();
-print_r($mysqli);
-
-
-
-
 
 if (isset($_POST['btn_enter'])) {
-  login();
+  login($mysqli);
 }
-
-
-
-
 
 $page_title = "Login";
 
@@ -55,4 +44,3 @@ include("_parts/_header.php");
 
 <?php
 include("_parts/_footer.php");
-?>

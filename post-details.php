@@ -1,11 +1,13 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Input ====
 $post_id = $_SESSION['active_post_id'];
 
 // ==== Process ====
-$post = getPostById($post_id);
+$post = getPostById($mysqli, $post_id);
 // print_r($post);
 
 // Output

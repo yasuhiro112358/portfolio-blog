@@ -1,21 +1,23 @@
 <?php
 require_once("app/config.php");
 
+$mysqli = Database::getInstance();
+
 // ==== Input ====
 $post_id = $_SESSION['active_post_id'];
 
 if ($_SESSION['role'] == "A") {
-    $usernames = getAllUsernames();
+    $usernames = getAllUsernames($mysqli);
 } elseif ($_SESSION['role'] == "U") {
-    $usernames = getUsername($_SESSION['account_id']);
+    $usernames = getUsername($mysqli, $_SESSION['account_id']);
 }
 // print_r($usernames);
 
 // ==== Process ====
-$post = getPostById($post_id);
+$post = getPostById($mysqli, $post_id);
 // print_r($post);
 
-$all_categories = getAllCategories();
+$all_categories = getAllCategories($mysqli);
 // print_r($all_categories);
 
 // Edit
@@ -33,7 +35,7 @@ if (isset($_POST['btn_save'])) {
     // echo $account_id;
     // echo $category_id;
 
-    updatePost($post_id, $post_title, $post_message, $date_posted, $account_id, $category_id);
+    updatePost($mysqli, $post_id, $post_title, $post_message, $date_posted, $account_id, $category_id);
 
     header("location:post-details.php");
 }

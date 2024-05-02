@@ -1,7 +1,7 @@
 -- This SQL script is designed for MySQL
-CREATE DATABASE IF NOT EXISTS hiro112358_portfolioblog;
+CREATE DATABASE IF NOT EXISTS blog_test;
 
-USE hiro112358_portfolioblog;
+USE blog_test;
 
 CREATE TABLE categories (
   category_id INT(11) NOT NULL AUTO_INCREMENT,
